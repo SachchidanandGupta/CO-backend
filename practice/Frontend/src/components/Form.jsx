@@ -1,5 +1,6 @@
 import React from 'react'
 import axios from 'axios'
+
 const Form = () => {
     const submitHandler=(e)=>{
        e.preventDefault();
@@ -9,7 +10,8 @@ const Form = () => {
         title:title.value,
         description:description.value
       }).then((res)=>{
-        console.log(res.data)
+        console.log(res.data);
+        
       });
     
     }
