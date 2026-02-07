@@ -1,8 +1,13 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import DescripUpFrom from "./DescripUpFrom";
+import Form from "./Form";
 
 const Card = () => {
   const [notes, setNotes] = useState([]);
+      const [popUp, setPopUp] = useState(false);
+const [noteId, setNoteId] = useState(null)
+  
   const getData = async () => {
     await axios.get("http://localhost:3000/api/notes").then((response) => {
       setNotes(response.data.notes);
@@ -15,7 +20,7 @@ const Card = () => {
     });
   }
   function updateNote(note_id){
-    console.log(note_id)
+    setNoteId(note_id);
     // axios.patch("http://localhost:3000/api/notes/"+note_id)
   }
   useEffect(() => {
@@ -23,6 +28,8 @@ const Card = () => {
   }, []);
   return (
     <>
+    <Form getData={getData}/>
+     { popUp && <DescripUpFrom noteId = {noteId} getData ={getData}/>}
       {notes.map((values, idx) => {
         return (
           <div
@@ -42,13 +49,20 @@ const Card = () => {
             </button>
             <button
             onClick={()=>{
-              updateNote(values._id)
+              updateNote(values._id);
+              if(popUp == true){
+                setPopUp(false);
+              }else{
+                setPopUp(true);
+              }
             }}
             className="px-4 py-2 bg-white rounded-xl cursor-pointer active:scale-95 ">
               Update
             </button>
             </div>
+           
           </div>
+
         );
       })}
     </>

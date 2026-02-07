@@ -1,10 +1,9 @@
 import React from 'react'
 import axios from 'axios'
 
-const Form = () => {
+const Form = (props) => {
     const submitHandler=(e)=>{
        e.preventDefault();
-       console.log(e.target.elements)
        const {title,description} = e.target.elements;
        axios.post("http://localhost:3000/api/notes",{
         title:title.value,
@@ -13,7 +12,7 @@ const Form = () => {
         console.log(res.data);
         
       });
-    
+      props.getData();
     }
   return (
     <div>

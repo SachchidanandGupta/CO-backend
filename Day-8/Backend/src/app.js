@@ -1,7 +1,9 @@
 const express = require('express');
 const noteModel = require('./models/notes.model');
 const cors = require("cors");
-const app = express();
+const path = require("path");
+const app = express(); 
+app.use(express.static("./Public")) // this static middleware take the public floderr and make it publically available 
 app.use(cors());
 app.use(express.json());
 app.post("/api/notes",async(req,res)=>{
@@ -35,5 +37,8 @@ app.patch("/api/notes/:id",async(req,res)=>{
    res.status(200).json({
     message:"description updated successfully.",
    })
+})
+app.use("*name",(req,res)=>{  // the * is stands for wildcard this is used to handle the api request that isn't have been designed/created by the developer
+   res.sendFile(path.join(__dirname,"..","/Public/index.html"));
 })
 module.exports = app;
