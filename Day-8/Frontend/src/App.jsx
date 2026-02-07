@@ -2,7 +2,8 @@ import { useEffect, useState } from 'react'
 import axios from "axios";
 function App() {
  const [notes, setNotes] = useState([]);
- const [data, setData] = useState([])
+ const [popUp, setPopUp] = useState(false);
+ const [noteId, setNoteId] = useState(null);
  console.log("hello integration");
 const submitHandler = (e)=>{
     e.preventDefault();
@@ -14,6 +15,24 @@ const submitHandler = (e)=>{
       console.log(res.data);
       fetchNotes();
     })
+}
+
+async function updatePrevent(e){
+   e.preventDefault();
+   const {updateDescription} = e.target.elements;
+   console.log(updateDescription.value);
+   console.log(noteId);
+    await axios.patch("http://localhost:3000/api/notes/"+noteId,{
+      description:updateDescription.value
+     }).then((res)=>{
+      console.log(res.data)
+     })
+     fetchNotes();
+     setPopUp(false);
+}
+const updateHandler =(note_id)=>{
+   setNoteId(note_id);
+  console.log(note_id);
 }
  function fetchNotes(){
   axios.get("http://localhost:3000/api/notes").then((res)=>{
@@ -40,7 +59,12 @@ const submitHandler = (e)=>{
       <input name='description' type="text" placeholder='enter the description' />
       <button>Create Note</button>
     </form>
-   
+    { popUp &&
+      <form className='input-field-notes-create' onSubmit={updatePrevent}  >
+          <input type="text" placeholder='enter the updated description' name='updateDescription' />
+          <button >update</button>
+      </form>
+    }
     <div className="notes">
       {notes.map((notes,idx)=>{    
       return <div className="note"  key={idx}>
@@ -49,6 +73,10 @@ const submitHandler = (e)=>{
         <button onClick={()=>{
           handleDeleteNote(notes._id);
         }}>Delete</button>
+        <button onClick={()=>{
+          setPopUp(true);
+          updateHandler(notes._id)
+        }}>update</button>
        
       </div>
       })}
