@@ -8,7 +8,7 @@ function App() {
 const submitHandler = (e)=>{
     e.preventDefault();
     const {title, description} = e.target.elements; // e.target.elemets always find the target using name attribute
-    axios.post("http://localhost:3000/api/notes",{
+    axios.post("https://co-backend-jviv.onrender.com/api/notes",{
       title:title.value,
       description:description.value
     }).then((res)=>{
@@ -22,7 +22,7 @@ async function updatePrevent(e){
    const {updateDescription} = e.target.elements;
    console.log(updateDescription.value);
    console.log(noteId);
-    await axios.patch("http://localhost:3000/api/notes/"+noteId,{
+    await axios.patch("https://co-backend-jviv.onrender.com/api/notes/"+noteId,{
       description:updateDescription.value
      }).then((res)=>{
       console.log(res.data)
@@ -35,12 +35,12 @@ const updateHandler =(note_id)=>{
   console.log(note_id);
 }
  function fetchNotes(){
-  axios.get("http://localhost:3000/api/notes").then((res)=>{
+  axios.get("https://co-backend-jviv.onrender.com/api/notes").then((res)=>{
     setNotes(res.data.notes);
    }) 
  }
  async function handleDeleteNote(note_id){
-  await axios.delete("http://localhost:3000/api/notes/"+note_id).then((res)=>{
+  await axios.delete("https://co-backend-jviv.onrender.com/api/notes/"+note_id).then((res)=>{
     console.log(res.data);
     fetchNotes();
   });
