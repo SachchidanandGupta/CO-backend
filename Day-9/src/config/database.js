@@ -4,6 +4,7 @@ function connectToDB(){
         console.log("Connected to database");
     }).catch((err)=>{
         console.log("Connection failed");
-    })
+        console.log(err)
+    });
 };
 module.exports = connectToDB;
