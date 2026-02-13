@@ -3,7 +3,7 @@ const userSchema = new mongoose.Schema({
     username:String,
     email:{
         type:String,
-        unique:[true,"email already in use"]
+        unique:[true,"User Email already registered"]
     },
     password:String
 });
