@@ -4,6 +4,7 @@ const authRouter = express.Router(); // the express.Router allow the developer t
 
 const userModel = require("../models/user.model");
 
+
 authRouter.post("/register", async (req, res) => {
   const { name, email, password } = req.body;
   
