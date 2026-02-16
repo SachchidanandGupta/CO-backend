@@ -41,4 +41,17 @@ authRouter.post("/register", async (req, res) => {
   });
 });
 
+
+authRouter.post("/login",async(req,res)=>{
+  const {email,password} = req.body;
+   const user = await userModel.findOne({email});
+   if(!user){
+    return res.status(404).json({
+      message:"User not found by this email"
+    });
+   }
+   const isPasswordMatch = user.password === crypto.createHash("md5").update(password).digest("hex");
+ 
+   
+})
 module.exports = authRouter;
