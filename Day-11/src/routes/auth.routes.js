@@ -8,6 +8,14 @@ const jwt = require("jsonwebtoken");
 
 const crypto = require('crypto');
 
+authRouter.post("/protected", (req, res) => {
+  console.log(req.cookies);
+  res.status(200).json({
+    message: "Cookies fetched.",
+  });
+});
+
+
 authRouter.post("/register", async (req, res) => {
   const { username, email, password } = req.body;
 
