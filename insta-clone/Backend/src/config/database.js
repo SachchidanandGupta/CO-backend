@@ -1,8 +1,12 @@
 const mongoose = require("mongoose");
 
-async function connectToDB(){
-    await mongoose.connect(process.env.MONGO_URI + "INSTA");
-    console.log("Connected to database");
+function connectToDB(){
+    mongoose.connect(process.env.MONGO_URI).then(()=>
+    {
+        console.log("Connected to database");
+    }).catch((err) =>{
+        console.log("Connection Failed");
+    })
 };
 
 module.exports = connectToDB;
